@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model House {
+  id         Int      @id @default(autoincrement())
+  userId     String   @map("user_id")
+  image      String
+  latitude   Float
+  longitude  Float
+  address    String
+  bedrooms   Int
+  create_at  DateTime @default(now())
+  updatedArt DateTime @default(now()) @map("updated_at")
+
+  @@index([userId], name: "houses.userId")
+  @@map("houses")
+}
