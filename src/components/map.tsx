@@ -17,8 +17,8 @@ export default function Map({ setDataBounds, houses, highlightedId }: IProps) {
   const [selected, setSelected] = useState<HousesQuery_houses | null>(null);
   const mapRef = useRef<ReactMapGL | null>(null);
   const [viewport, setViewport] = useLocalState<ViewState>("viewport", {
-    latitude: 43,
-    longitude: -79,
+    latitude: 6,
+    longitude: 12,
     zoom: 10,
   });
 
@@ -116,7 +116,7 @@ export default function Map({ setDataBounds, houses, highlightedId }: IProps) {
                 gravity="auto"
               />
               <Link href={`/houses/${selected.id}`}>
-                <a>View House</a>
+                View House
               </Link>
             </div>
           </Popup>

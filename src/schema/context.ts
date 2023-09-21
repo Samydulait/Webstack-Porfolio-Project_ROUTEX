@@ -1,4 +1,5 @@
-import { PrismaClient } from "../prisma.ts";
+import { PrismaClient } from "../prisma";
+
 
 export interface Context {
   uid: string | null;

@@ -302,7 +302,7 @@ export default function HouseForm({ house }: IProps) {
               Save
             </button>{" "}
             <Link href={house ? `/houses/${house.id}` : "/"}>
-              <a>Cancel</a>
+              Cancel
             </Link>
           </div>
         </>
