@@ -25,7 +25,7 @@ const AuthContext = createContext<IAuthContext>({
   authenticated: false,
 });
 
-export const AuthProvider: FunctionComponent = ({ children }) => {
+export const AuthProvider: FunctionComponent = ({children }) => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const router = useRouter();
 

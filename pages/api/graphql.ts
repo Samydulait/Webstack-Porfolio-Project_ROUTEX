@@ -18,6 +18,7 @@ const server = new ApolloServer({
   },
   tracing: process.env.NODE_ENV === "development",
 });
+await server.start();
 
 const handler = server.createHandler({ path: "/api/graphql" });
 
