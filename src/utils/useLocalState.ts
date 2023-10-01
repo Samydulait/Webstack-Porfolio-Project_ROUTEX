@@ -11,7 +11,7 @@ export function useLocalState<S = undefined>(key: string, initial: S) {
     return initial;
   });
 
-  useEffect(() => {
+  useEffect(() =>{
     if (window.localStorage) {
       window.localStorage.setItem(key, JSON.stringify(value));
     }

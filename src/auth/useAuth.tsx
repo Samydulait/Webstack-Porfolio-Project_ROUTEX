@@ -1,3 +1,4 @@
+// This is where we goin to be creating our own custom auth provider
 import {
   useEffect,
   useState,
@@ -11,62 +12,67 @@ import "firebase/auth";
 import initFirebase from "./initFirebase";
 import { removeTokenCookie, setTokenCookie } from "./tokenCookies";
 
-initFirebase();
+// This involve the creation of the context component and the provider component that uses the context.
 
-interface IAuthContext {
-  user: firebase.User | null;
-  logout: () => void;
-  authenticated: boolean;
+initFirebase();         // we call initFirebase thus firebase is initialized: 
+
+interface IAuthContext {            // the creation of the context starts here
+    user: firebase.User | null;
+    logout: () => void;
+    authenticated: boolean;
 }
 
-const AuthContext = createContext<IAuthContext>({
-  user: null,
-  logout: () => null,
-  authenticated: false,
+const AuthContext = createContext<IAuthContext>({        // Ends here
+    user: null,
+    logout: () => null,
+    authenticated: false,
 });
 
-export const AuthProvider: FunctionComponent = ({children }) => {
-  const [user, setUser] = useState<firebase.User | null>(null);
-  const router = useRouter();
+export const AuthProvider: FunctionComponent = ({children}) => {
+    const [user, setUser] = useState<firebase.User | null>(null);
+    const router = useRouter();
 
-  const logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        router.push("/");
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  };
-
-  useEffect(() => {
-    const cancelAuthListener = firebase
-      .auth()
-      .onIdTokenChanged(async (user) => {
-        if (user) {
-          const token = await user.getIdToken();
-          setTokenCookie(token);
-          setUser(user);
-        } else {
-          removeTokenCookie();
-          setUser(null);
-        }
-      });
-
-    return () => {
-      cancelAuthListener();
+    const logout = () => {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+           router.push("/")            //this to push the user to home page
+        })
+        .catch((e) => {                   // because it might throw an exceptionary error, we need to catch then create catch() and log it to the console
+            console.error(e);
+        });
     };
-  }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, logout, authenticated: !!user }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    useEffect(() => {
+        const cancelAuthListerner = firebase
+          .auth()
+          .onIdTokenChanged(async (user) => {
+            if (user) {
+                const token = await user.getIdToken();
+                setTokenCookie(token);
+                setUser(user);
+            } else {
+                removeTokenCookie();
+                setUser(null);
+            }
+          });
+
+        return () => {                        // called when the component unmounts
+            cancelAuthListerner();              
+        };
+
+    }, []);
+
+    return (                                                                        // user, logout and Authenticated are components to the children in teh context
+      <AuthContext.Provider value={{ user, logout, authenticated: !!user }}>        
+        {children}
+      </AuthContext.Provider>
+    );
 };
 
 export function useAuth() {
-  return useContext(AuthContext);
+    return useContext(AuthContext);
 }
+
+

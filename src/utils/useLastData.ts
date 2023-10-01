@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef } from "react"
 
 export function useLastData<S>(data: S) {
   const ref = useRef(data);

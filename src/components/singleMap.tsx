@@ -3,7 +3,7 @@ import Link from "next/link";
 import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-interface IHouse {
+interface IHouse{
   id: string;
   latitude: number;
   longitude: number;
@@ -14,11 +14,11 @@ interface IProps {
   nearby: IHouse[];
 }
 
-export default function SingleMap({ house, nearby }: IProps) {
+export default function SingleMap({house, nearby}: IProps) {
   const [viewport, setViewport] = useState({
     latitude: house.latitude,
     longitude: house.longitude,
-    zoom: 13,
+    zoom: 13
   });
 
   return (
@@ -33,38 +33,42 @@ export default function SingleMap({ house, nearby }: IProps) {
         scrollZoom={false}
         minZoom={8}
       >
-        <div className="absolute top-0 left-0 p-4">
-          <NavigationControl showCompass={false} />
-        </div>
+        <div className="absolute top-0 left-0 p-4" >
+          <NavigationControl showCompass={false}/>
+        </div>  
 
         <Marker
-          latitude={house.latitude}
           longitude={house.longitude}
+          latitude={house.latitude}
           offsetLeft={-15}
-          offsetTop={-15}
+          offsetTop={15}
         >
-          <button
-            type="button"
-            style={{ width: "30px", height: "30px", fontSize: "30px" }}
+          <button 
+            type="button" 
+            style={{width: "30px", height: "30px", fontSize: "30px" }}
           >
-            <img src="/home-color.svg" className="w-8" alt="selected house" />
+            <img src="/home-color.svg" className="w-8" alt="selected house"></img>
           </button>
         </Marker>
 
-        {nearby.map((near) => (
-          <Marker
-            key={near.id}
-            latitude={near.latitude}
-            longitude={near.longitude}
-            offsetLeft={-15}
-            offsetTop={-15}
-          >
-            <Link href={`/houses/${near.id}`} style={{ width: "30px", height: "30px", fontSize: "30px" }}>
-                <img src="/home-solid.svg" className="w-8" alt="nearby house" />
-            </Link>
-          </Marker>
-        ))}
+        {nearby.map(near => (
+        <Marker
+          key={near.id}
+          latitude={near.latitude}
+          longitude={near.longitude}
+          offsetLeft={-15}
+          offsetTop={-15}
+        >
+          <Link href={`/houses/${near.id}`}>
+            <a style={{width: "30px", height: "30px", fontSize: "30px" }} >
+              <img src="/home-solid.svg" className="w-8" alt="selected house"></img>
+            </a>
+          </Link>
+
+        </Marker>
+      ))}
       </ReactMapGL>
     </div>
-  );
+  )
 }
+

@@ -1,19 +1,12 @@
+import cookies from "js-cookie";
+
+export const getTokenCookie = () => cookies.get("token");
+
 export const setTokenCookie = (token: string) => {
-  fetch("/api/login", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ token }),
-  });
+    cookies.set("token", token, {       // this setter(key, value, {time:1hr})
+        expires: 1 / 24,
+    });
 };
 
-export const removeTokenCookie = () => {
-  fetch("/api/logout", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({}),
-  });
-};
+export const removeTokenCookie = () => cookies.remove("token");
+

@@ -4,12 +4,11 @@ import Link from "next/link";
 import { useAuth } from "src/auth/useAuth";
 import { DeleteHouse, DeleteHouseVariables } from "src/generated/DeleteHouse";
 
-const DELETE_MUTATION = gql`
+const DELETE_MUTATION =gql`
   mutation DeleteHouse($id: String!) {
     deleteHouse(id: $id)
   }
 `;
-
 interface IProps {
   house: {
     id: string;
@@ -19,39 +18,39 @@ interface IProps {
 
 export default function HouseNav({ house }: IProps) {
   const router = useRouter();
-  const { user } = useAuth();
+  const {user} = useAuth();
   const canManage = !!user && user.uid === house.userId;
   const [deleteHouse, { loading }] = useMutation<
-    DeleteHouse,
+    DeleteHouse, 
     DeleteHouseVariables
-  >(DELETE_MUTATION);
-
+  >(DELETE_MUTATION)
   return (
     <>
       <Link href="/">
-        map
+        <a>map</a>
       </Link>
-      {canManage && (
+      {canManage && 
         <>
           {" | "}
-          <Link href={`/houses/${house.id}/edit`}>
-            edit
+          <Link href={`/house/${house.id}`}>
+            <a>edit</a>
           </Link>
           {" | "}
-          <button
+          <button 
             disabled={loading}
             type="button"
             onClick={async () => {
               if (confirm("Are you sure?")) {
-                await deleteHouse({ variables: { id: house.id } });
+                await deleteHouse({variables: {id: house.id}});
                 router.push("/");
               }
             }}
           >
-            delete
+            
           </button>
         </>
-      )}
+      }
     </>
-  );
+  )
 }
+

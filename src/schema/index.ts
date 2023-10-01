@@ -8,3 +8,6 @@ export const schema = buildSchemaSync({
   emitSchemaFile: process.env.NODE_ENV === "development",
   authChecker,
 });
+
+
+
