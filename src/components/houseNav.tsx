@@ -46,7 +46,6 @@ export default function HouseNav({ house }: IProps) {
               }
             }}
           >
-            
           </button>
         </>
       }

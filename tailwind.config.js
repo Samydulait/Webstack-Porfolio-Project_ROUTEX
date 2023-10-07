@@ -3,7 +3,7 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
+  purge: ["./src/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {},

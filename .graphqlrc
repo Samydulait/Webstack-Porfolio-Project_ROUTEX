@@ -1,5 +1,0 @@
-schema: 'packages/api/src/schema.graphql'
-documents: 'packages/app/src/components/**/*.graphql'
-extensions:
-  customExtension:
-    foo: true

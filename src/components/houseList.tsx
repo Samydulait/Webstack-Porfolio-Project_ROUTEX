@@ -18,8 +18,7 @@ export default function HouseList({ houses, setHighlightedId }: IProps) {
               className="px-6 pt-4 cursor-pointer flex flex-wrap" 
               onMouseEnter={() => setHighlightedId(house.id)} 
               onMouseLeave={() => setHighlightedId(null)}
-            >
-
+           >
             </div>
             <div className="sm:w-full md:w-1/2">
               <Image 
@@ -40,7 +39,8 @@ export default function HouseList({ houses, setHighlightedId }: IProps) {
               <p>{house.bedrooms} 🛌 house</p>
             </div>
           </div>
-        </Link>)
+        </Link>
+        )
       )}
     </>
   )

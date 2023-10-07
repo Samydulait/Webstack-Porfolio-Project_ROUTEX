@@ -99,7 +99,7 @@
         },
         "directive": "map"
       },
-      "argument": "",
+      "argument": "name",
       "value": "\"user_id\""
     },
     {
@@ -140,7 +140,7 @@
     {
       "tag": "CreateField",
       "model": "House",
-      "field": "create_at",
+      "field": "createdAt",
       "type": "DateTime",
       "arity": "Required"
     },
@@ -150,7 +150,7 @@
         "path": {
           "tag": "Field",
           "model": "House",
-          "field": "create_at"
+          "field": "createdAt"
         },
         "directive": "default"
       }
@@ -162,17 +162,42 @@
         "path": {
           "tag": "Field",
           "model": "House",
-          "field": "create_at"
+          "field": "createdAt"
         },
         "directive": "default"
       },
       "argument": "",
       "value": "now()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "House",
+          "field": "createdAt"
+        },
+        "directive": "map"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "House",
+          "field": "createdAt"
+        },
+        "directive": "map"
+      },
+      "argument": "name",
+      "value": "\"created_at\""
     },
     {
       "tag": "CreateField",
       "model": "House",
-      "field": "updatedArt",
+      "field": "updatedAt",
       "type": "DateTime",
       "arity": "Required"
     },
@@ -182,7 +207,7 @@
         "path": {
           "tag": "Field",
           "model": "House",
-          "field": "updatedArt"
+          "field": "updatedAt"
         },
         "directive": "default"
       }
@@ -194,7 +219,7 @@
         "path": {
           "tag": "Field",
           "model": "House",
-          "field": "updatedArt"
+          "field": "updatedAt"
         },
         "directive": "default"
       },
@@ -207,7 +232,7 @@
         "path": {
           "tag": "Field",
           "model": "House",
-          "field": "updatedArt"
+          "field": "updatedAt"
         },
         "directive": "map"
       }
@@ -219,11 +244,11 @@
         "path": {
           "tag": "Field",
           "model": "House",
-          "field": "updatedArt"
+          "field": "updatedAt"
         },
         "directive": "map"
       },
-      "argument": "",
+      "argument": "name",
       "value": "\"updated_at\""
     },
     {
@@ -246,7 +271,7 @@
         },
         "directive": "map"
       },
-      "argument": "",
+      "argument": "name",
       "value": "\"houses\""
     },
     {

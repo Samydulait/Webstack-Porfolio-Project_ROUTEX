@@ -91,7 +91,6 @@ class House {
       10000
     );
 
-
     return ctx.prisma.house.findMany({
       where: {
         latitude: { gte: bounds[0].latitude, lte: bounds[1].latitude },
@@ -161,7 +160,7 @@ export class HouseResolver {
         bedrooms: input.bedrooms,
       },
     });
-  }
+}
 
   @Authorized()
   @Mutation((_returns) => Boolean, {nullable: false})

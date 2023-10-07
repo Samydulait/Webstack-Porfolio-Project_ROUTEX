@@ -35,70 +35,69 @@ export function SearchBox ({
         libraries,
     });
 
-    if (!isLoaded) return null;                     // check that no error
-    if (loadError) return <div>Error loading</div>;
+  if (!isLoaded) return null;                     // check that no error
+  if (loadError) return <div>Error loading</div>;
 
-    return (
-        <ReadySearchBox
-            onSelectAddress={onSelectAddress}
-            defaultValue={defaultValue}
-        />
-    );
+  return (
+    <ReadySearchBox
+      onSelectAddress={onSelectAddress}
+      defaultValue={defaultValue}
+    />
+  );
 }
 
 function ReadySearchBox({ onSelectAddress, defaultValue }: ISearchBoxProps) {
-    const {
-        ready,
-        value,
-        setValue,
-        suggestions: { status, data },
-        clearSuggestions,
-    } = usePlacesAutocomplete({debounce: 300, defaultValue})
+  const {
+    ready,
+    value,
+    setValue,
+    suggestions: { status, data },
+    clearSuggestions,
+  } = usePlacesAutocomplete({debounce: 300, defaultValue})
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-        if  (e.target.value === "") {
-            onSelectAddress("", null, null);
-        }
-    };
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    if  (e.target.value === "") {
+      onSelectAddress("", null, null);
+    }
+};
 
-    const handleSelect = async (address: string) => {
-        setValue(address, false);
-        clearSuggestions();
+  const handleSelect = async (address: string) => {
+    setValue(address, false);
+    clearSuggestions();
 
-        try {
-            const results = await getGeocode({ address });
-            const { lat, lng } = await getLatLng(results[0]);
-            onSelectAddress(address, lat, lng);
-        }   catch (error) {
-            console.error(`😱 Error:`, error);
-        }
-    };
+    try {
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      onSelectAddress(address, lat, lng);
+    } catch (error) {
+      console.error(`😱 Error:`, error);
+    }
+  };
 
-    console.log({ status, data });
+  console.log({ status, data });
 
-    return (
-        <Combobox onSelect={handleSelect}>
-            <ComboboxInput 
-                id="search" 
-                value={value} 
-                onChange={handleChange} 
-                disabled={!ready} 
-                placeholder="Search your location" 
-                className="w-null p-2"
-                autoComplete= "off"
-            />
-            <ComboboxPopover>
-                <ComboboxList>
-                    {status === "ok" && 
-                      data.map(({ place_id, description }) => (
-                        <ComboboxOption key={place_id} value={description} />
-                      ))
-                    }
-                </ComboboxList>
-            </ComboboxPopover>
-        </Combobox>
-    );
+  return (
+    <Combobox onSelect={handleSelect}>
+      <ComboboxInput 
+        id="search" 
+        value={value} 
+        onChange={handleChange} 
+        disabled={!ready} 
+        placeholder="Search your location" 
+        className="w-null p-2"
+        autoComplete= "off"
+      />
+      <ComboboxPopover>
+        <ComboboxList>
+          {status === "ok" && 
+            data.map(({ place_id, description }) => (
+              <ComboboxOption key={place_id} value={description} />
+            ))}
+        </ComboboxList>
+      </ComboboxPopover>
+    </Combobox>
+  );
 }
 
 

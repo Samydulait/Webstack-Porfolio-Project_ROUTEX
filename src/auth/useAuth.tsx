@@ -29,46 +29,45 @@ const AuthContext = createContext<IAuthContext>({        // Ends here
 });
 
 export const AuthProvider: FunctionComponent = ({children}) => {
-    const [user, setUser] = useState<firebase.User | null>(null);
-    const router = useRouter();
+  const [user, setUser] = useState<firebase.User | null>(null);
+  const router = useRouter();
 
-    const logout = () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-           router.push("/")            //this to push the user to home page
-        })
-        .catch((e) => {                   // because it might throw an exceptionary error, we need to catch then create catch() and log it to the console
-            console.error(e);
-        });
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+         router.push("/")            //this to push the user to home page
+      })
+      .catch((e) => {                   // because it might throw an exceptionary error, we need to catch then create catch() and log it to the console
+          console.error(e);
+      });
+  };
+
+  useEffect(() => {
+    const cancelAuthListerner = firebase
+      .auth()
+      .onIdTokenChanged(async (user) => {
+        if (user) {
+            const token = await user.getIdToken();
+            setTokenCookie(token);
+            setUser(user);
+        } else {
+            removeTokenCookie();
+            setUser(null);
+        }
+      });
+
+    return () => {                        // called when the component unmounts
+        cancelAuthListerner();              
     };
+  }, []);
 
-    useEffect(() => {
-        const cancelAuthListerner = firebase
-          .auth()
-          .onIdTokenChanged(async (user) => {
-            if (user) {
-                const token = await user.getIdToken();
-                setTokenCookie(token);
-                setUser(user);
-            } else {
-                removeTokenCookie();
-                setUser(null);
-            }
-          });
-
-        return () => {                        // called when the component unmounts
-            cancelAuthListerner();              
-        };
-
-    }, []);
-
-    return (                                                                        // user, logout and Authenticated are components to the children in teh context
-      <AuthContext.Provider value={{ user, logout, authenticated: !!user }}>        
-        {children}
-      </AuthContext.Provider>
-    );
+  return (                                                                        // user, logout and Authenticated are components to the children in teh context
+    <AuthContext.Provider value={{ user, logout, authenticated: !!user }}>        
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export function useAuth() {

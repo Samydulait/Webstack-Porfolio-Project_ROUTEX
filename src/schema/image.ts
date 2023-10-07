@@ -13,7 +13,7 @@ class ImageSignature {
   @Field((_type) => String)
   signature!: string;
 
-  @Field(_type => Int)
+  @Field((_type) => Int)
   timestamp!: number;
 }
 
